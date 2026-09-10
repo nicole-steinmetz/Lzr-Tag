@@ -22,35 +22,29 @@
     }
 
     var headline = document.querySelector('[data-testid="hero-tagline"]');
+    var track = document.querySelector('[data-testid="hero-track"]');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (headline && !reducedMotion) {
+    if (headline && track && !reducedMotion) {
         var GREY = [217, 217, 217];
+        var RED = [224, 8, 3];
+        var line = headline.querySelector('.tagline-red');
         var words = [];
 
-        headline.querySelectorAll('.line').forEach(function (line) {
-            var target = line.classList.contains('tagline-red') ? [224, 10, 2] : [23, 24, 28];
+        if (line) {
             var text = line.textContent.trim();
             line.textContent = '';
             text.split(/\s+/).forEach(function (w, i, arr) {
                 var span = document.createElement('span');
                 span.className = 'word';
                 span.textContent = w;
-                words.push({ el: span, target: target });
+                words.push(span);
                 line.appendChild(span);
                 if (i < arr.length - 1) {
                     line.appendChild(document.createTextNode(' '));
                 }
             });
-        });
-
-        var hero = document.querySelector('[data-testid="hero-section"]');
-        var limit = 1;
-        function measure() {
-            limit = Math.max(hero.offsetHeight - 120, 1);
         }
-        measure();
-        window.addEventListener('resize', measure);
 
         function lerp(a, b, t) {
             return Math.round(a + (b - a) * t);
@@ -59,14 +53,15 @@
         var ticking = false;
         function paint() {
             ticking = false;
-            var p = 1 - Math.min(Math.max(window.scrollY / limit, 0), 1);
-            words.forEach(function (w, i) {
-                var t = Math.min(Math.max(p * 1.4 - i * 0.1, 0), 1);
+            var scrollable = Math.max(track.offsetHeight - window.innerHeight, 1);
+            var p = Math.min(Math.max(window.scrollY / (scrollable * 0.5), 0), 1);
+            words.forEach(function (el, i) {
+                var t = Math.min(Math.max(p * words.length - i, 0), 1);
                 var e = t * t * (3 - 2 * t);
-                w.el.style.color =
-                    'rgb(' + lerp(GREY[0], w.target[0], e) + ',' +
-                    lerp(GREY[1], w.target[1], e) + ',' +
-                    lerp(GREY[2], w.target[2], e) + ')';
+                el.style.color =
+                    'rgb(' + lerp(GREY[0], RED[0], e) + ',' +
+                    lerp(GREY[1], RED[1], e) + ',' +
+                    lerp(GREY[2], RED[2], e) + ')';
             });
         }
         function onScroll() {
@@ -76,6 +71,8 @@
             }
         }
         window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', paint);
+        window.addEventListener('load', paint);
         paint();
     }
 })();
