@@ -1,0 +1,39 @@
+# LZR TAG — Landing Page PRD
+
+## Original Problem Statement
+Build a one-page industrial B2B landing page for LZR TAG, a mining consumables brand, aimed at procurement and technical staff at underground mining companies. Single scrolling page with top nav linking to four anchor sections (Intro, Products, Where to Buy, Get a Quote); hero with logo, tagline "Stay Covered. Stay Visible.", placeholder intro copy, and a CTA scrolling to the quote section. Design must match the attached brochure: bold red header band (#E00A02), light grey page background, white content cards, Oswald headings, Poppins body, numbered red circular badges. Must run as a fully static site (no backend/database) for Cloudflare Pages hosting. Fillout quote form comes later.
+
+## User Personas
+- Procurement staff at underground mining companies (no-nonsense industrial buyers)
+- Technical/survey staff evaluating consumables
+
+## Architecture
+- Fully static site: plain HTML/CSS/JS, no backend, no database, no API calls
+- Source of truth: `/app/frontend/public/` (index.html, styles.css, main.js, assets/logo.webp) — this folder is the drag-and-drop deployable for Cloudflare Pages
+- Fonts: Oswald + Poppins via Google Fonts CDN
+- Preview served via the existing frontend dev server on port 3000 (React entry `/app/frontend/src/index.js` is a deliberate no-op so the dev server injects a harmless bundle)
+- Backend service left running but unused by the site
+
+## Core Requirements (static)
+1. Single scrolling page, fixed top nav with 4 anchor links + mobile menu
+2. Hero: logo, tagline, placeholder intro paragraph, CTA → #quote
+3. Four section stubs (Intro, Products, Where to Buy, Get a Quote) as white cards with numbered red badges 01–04
+4. Brochure-matched design: #E00A02 red, light grey bg, white cards, Oswald/Poppins
+5. Simple footer with logo + copyright
+6. Static-hostable output for Cloudflare Pages
+
+## Implemented
+- 2026-07 (round 1): Page shell + hero complete. Fixed red header (#E00A02) with logo, desktop nav, mobile hamburger menu; hero with transparent WebP logo, "Stay Covered. Stay Visible." tagline, clearly-marked placeholder copy, red CTA smooth-scrolling to quote section; four numbered-badge section cards; charcoal footer with logo, tagline, nav, copyright. All interactive elements carry data-testids.
+
+## Backlog (prioritized)
+- P0: Fillout quote form embed in Get a Quote section (planned, user-confirmed for later)
+- P0: Final marketing copy for hero + Intro (client pending)
+- P1: Products section — real catalogue from LZR_TAG_Consumables_Price_List_2026.pdf (12 products, 5 categories, pricing/RRP bands)
+- P1: Where to Buy — Australian partner, international partner, independent reseller listings (from PDF page 2)
+- P2: Customer/partner logo strip (brochure footer motif)
+- P2: Deploy to Cloudflare Pages
+
+## Next Tasks
+1. Embed Fillout quote form once form URL is provided
+2. Swap placeholder hero copy for final approved text
+3. Build Products grid from the 2026 price list PDF
