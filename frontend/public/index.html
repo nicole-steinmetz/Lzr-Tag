@@ -15,13 +15,10 @@
 <body>
 
     <header class="site-header" data-testid="site-header">
+        <div class="top-strip" data-testid="top-strip" aria-hidden="true"></div>
         <div class="header-inner">
             <a href="#top" class="brand" data-testid="brand-logo-link">
                 <img src="./assets/logo.webp" alt="LZR TAG logo" class="brand-logo" data-testid="brand-logo" />
-                <span class="brand-text">
-                    <span class="brand-name">LZR TAG</span>
-                    <span class="brand-sub">Mining Consumables</span>
-                </span>
             </a>
             <nav class="main-nav" data-testid="main-nav" aria-label="Primary">
                 <a href="#intro" class="nav-link" data-testid="nav-link-intro">Intro</a>
@@ -44,14 +41,10 @@
     <main id="top">
 
         <section class="hero" data-testid="hero-section">
-            <div class="hero-band" data-testid="hero-band" aria-hidden="true"></div>
             <div class="hero-inner">
-                <div class="hero-logo-wrap" data-testid="hero-logo-wrap">
-                    <img src="./assets/logo.webp" alt="LZR TAG — Stay Covered. Stay Visible." class="hero-logo" data-testid="hero-logo" />
-                </div>
                 <div class="hero-text">
                     <p class="hero-eyebrow" data-testid="hero-eyebrow">Mining Consumables &middot; Underground Survey &amp; Marking</p>
-                    <h1 class="hero-tagline" data-testid="hero-tagline">Stay Covered.<br /><span class="tagline-red">Stay Visible.</span></h1>
+                    <h1 class="hero-tagline" data-testid="hero-tagline"><span class="line-mask"><span class="line">Stay Covered.</span></span><span class="line-mask"><span class="line tagline-red">Stay Visible.</span></span></h1>
                     <p class="hero-copy" data-testid="hero-copy">
                         <em class="placeholder-note">[Placeholder copy — final text pending]</em>
                         LZR TAG supplies purpose-built consumables for underground mining survey and marking

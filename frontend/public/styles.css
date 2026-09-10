@@ -10,13 +10,14 @@
     --font-head: 'Oswald', sans-serif;
     --font-body: 'Poppins', sans-serif;
     --header-h: 76px;
+    --strip-h: 12px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--header-h) + 16px);
+    scroll-padding-top: calc(var(--header-h) + var(--strip-h) + 16px);
 }
 
 body {
@@ -53,38 +54,31 @@ img { display: block; max-width: 100%; }
     gap: 24px;
 }
 
+.top-strip {
+    height: var(--strip-h);
+    background: #0B0B0D;
+}
+
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    align-self: flex-start;
     text-decoration: none;
+    position: relative;
+    z-index: 2;
 }
 
 .brand-logo {
-    width: 48px;
-    height: 48px;
+    width: 148px;
+    height: 148px;
+    margin-top: calc(-1 * var(--strip-h));
     border-radius: 50%;
     background: #fff;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    animation: badgeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-
-.brand-name {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.06em;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.brand-sub {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
+@keyframes badgeIn {
+    from { opacity: 0; transform: scale(0.7) translateY(-14px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .main-nav { display: flex; align-items: center; gap: 8px; }
@@ -179,13 +173,8 @@ img { display: block; max-width: 100%; }
 /* ---------- Hero ---------- */
 
 .hero {
-    padding: var(--header-h) 0 72px;
+    padding: calc(var(--header-h) + var(--strip-h) + 72px) 0 72px;
     border-bottom: 4px solid var(--red);
-}
-
-.hero-band {
-    height: 72px;
-    background: var(--footer-bg);
 }
 
 .hero-inner {
@@ -198,24 +187,27 @@ img { display: block; max-width: 100%; }
     text-align: center;
 }
 
-.hero-logo-wrap {
-    display: flex;
-    justify-content: center;
-    margin-top: -36px;
-    margin-bottom: 32px;
-    animation: rise 0.7s ease both;
-}
-
-.hero-logo {
-    width: min(400px, 72vw);
-    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.28));
-}
-
 .hero-text {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: rise 0.7s ease 0.15s both;
+}
+
+.line-mask {
+    display: block;
+    overflow: hidden;
+}
+
+.line {
+    display: block;
+    transform: translateY(115%);
+    animation: lineUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.line-mask + .line-mask .line { animation-delay: 0.38s; }
+
+@keyframes lineUp {
+    to { transform: translateY(0); }
 }
 
 .hero-eyebrow {
@@ -226,6 +218,8 @@ img { display: block; max-width: 100%; }
     text-transform: uppercase;
     color: var(--red);
     margin-bottom: 20px;
+    opacity: 0;
+    animation: rise 0.7s ease 0.05s forwards;
 }
 
 .hero-tagline {
@@ -246,6 +240,17 @@ img { display: block; max-width: 100%; }
     font-size: 16px;
     color: var(--muted);
     margin-bottom: 36px;
+    opacity: 0;
+    animation: rise 0.7s ease 0.55s forwards;
+}
+
+.hero .cta-button {
+    opacity: 0;
+    animation: fadeIn 0.7s ease 0.7s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
 }
 
 .placeholder-note {
@@ -430,11 +435,7 @@ img { display: block; max-width: 100%; }
 
     .hero { padding-bottom: 56px; }
 
-    .hero-band { height: 64px; }
-
-    .hero-logo-wrap { margin-top: -32px; margin-bottom: 24px; }
-
-    .hero-logo { width: min(280px, 68vw); }
+    .brand-logo { width: 104px; height: 104px; }
 
     .section-card { padding: 32px 24px; gap: 20px; }
 
