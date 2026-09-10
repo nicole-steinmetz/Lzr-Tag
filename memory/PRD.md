@@ -24,7 +24,8 @@ Build a one-page industrial B2B landing page for LZR TAG, a mining consumables b
 
 ## Implemented
 - 2026-07 (round 1): Page shell + hero complete. Fixed red header (#E00A02) with logo, desktop nav, mobile hamburger menu; hero with transparent WebP logo, "Stay Covered. Stay Visible." tagline, clearly-marked placeholder copy, red CTA smooth-scrolling to quote section; four numbered-badge section cards; charcoal footer with logo, tagline, nav, copyright. All interactive elements carry data-testids.
-- 2026-07 (round 2): Hero reworked to a single centered column — enlarged logo (520px) on top overlapping a new black band (#141519) above the hero, then eyebrow (letter-spacing tightened to 0.14em), headline, paragraph, and CTA all center-aligned. Other sections untouched.
+- 2026-07 (round 2): Hero reworked to a single centered column — enlarged logo on top overlapping a new black band (#141519) above the hero, then eyebrow (letter-spacing tightened to 0.14em), headline, paragraph, and CTA all center-aligned. Other sections untouched.
+- 2026-07 (round 3): Hero sizing tuned — logo scaled to 400px (matches headline width), black band slimmed to 72px accent, tighter wrap margins so the full hero fits the first desktop screen. Layout/alignment unchanged.
 
 ## Backlog (prioritized)
 - P0: Fillout quote form embed in Get a Quote section (planned, user-confirmed for later)
