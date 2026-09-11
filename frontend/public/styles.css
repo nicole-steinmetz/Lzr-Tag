@@ -181,7 +181,18 @@ img { display: block; max-width: 100%; }
     border-bottom: 4px solid var(--red);
 }
 
+.hero-dots {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1.5px, transparent 1.6px);
+    background-size: 26px 26px;
+}
+
 .hero-inner {
+    position: relative;
+    z-index: 1;
     max-width: 780px;
     margin: 0 auto;
     display: flex;
@@ -239,30 +250,10 @@ img { display: block; max-width: 100%; }
     margin-bottom: 8px;
 }
 
-.cta-button {
-    display: inline-block;
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--red);
-    text-decoration: none;
-    padding: 16px 44px;
-    border-radius: 3px;
-    box-shadow: 0 6px 18px rgba(224, 10, 2, 0.35);
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+.hero-cta {
+    width: 320px;
+    margin: 0 auto;
 }
-
-.cta-button:hover,
-.cta-button:focus-visible {
-    background: var(--red-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(224, 10, 2, 0.4);
-}
-
-.cta-button:active { transform: translateY(0); }
 
 /* ---------- Sections ---------- */
 

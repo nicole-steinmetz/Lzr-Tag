@@ -29,6 +29,10 @@
         var GREY = [217, 217, 217];
         var RED = [224, 8, 3];
         var line = headline.querySelector('.tagline-red');
+        var dots = document.querySelector('[data-testid="hero-dots"]');
+        if (dots) {
+            dots.style.opacity = '0';
+        }
         var words = [];
 
         if (line) {
@@ -55,6 +59,10 @@
             ticking = false;
             var scrollable = Math.max(track.offsetHeight - window.innerHeight, 1);
             var p = Math.min(Math.max(window.scrollY / (scrollable * 0.5), 0), 1);
+            if (dots) {
+                var dp = p * p * (3 - 2 * p);
+                dots.style.opacity = dp;
+            }
             words.forEach(function (el, i) {
                 var t = Math.min(Math.max(p * words.length - i, 0), 1);
                 var e = t * t * (3 - 2 * t);
