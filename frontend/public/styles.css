@@ -211,7 +211,7 @@ img { display: block; max-width: 100%; }
 .hero-tagline {
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: clamp(2.6rem, 5.4vw, 4.2rem);
+    font-size: clamp(3.25rem, 6.75vw, 5.25rem);
     line-height: 1.05;
     text-transform: uppercase;
     letter-spacing: 0.01em;
@@ -552,30 +552,64 @@ img { display: block; max-width: 100%; }
 }
 
 .product-cta {
+    position: relative;
+    display: block;
+    height: 48px;
     margin-top: 16px;
-    display: inline-flex;
+    text-decoration: none;
+    perspective: 400px;
+    overflow: hidden;
+}
+
+.cta-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #E00803;
+    color: #F5F2EC;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    background: #E00803;
-    color: #fff;
+    transition: transform 450ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cta-label {
+    left: 49px;
+    right: 0;
     font-family: var(--font-head);
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    text-decoration: none;
-    padding: 13px 20px;
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
 }
 
-.product-cta svg { transition: transform 0.2s ease; }
+.cta-arrow { width: 46px; }
 
-.product-cta:hover,
-.product-cta:focus-visible { background: var(--red-dark); }
+.cta-arrow-out {
+    left: 0;
+    transform-origin: left center;
+}
 
-.product-cta:hover svg { transform: translateX(4px); }
+.cta-arrow-in {
+    right: 0;
+    transform: rotateY(90deg);
+    transform-origin: right center;
+}
+
+@media (hover: hover) {
+    .product-cta:hover .cta-label,
+    .product-cta:focus-visible .cta-label { transform: translateX(-49px); }
+
+    .product-cta:hover .cta-arrow-out,
+    .product-cta:focus-visible .cta-arrow-out { transform: rotateY(-90deg); }
+
+    .product-cta:hover .cta-arrow-in,
+    .product-cta:focus-visible .cta-arrow-in { transform: rotateY(0deg); }
+}
+
+@media (hover: none) {
+    .product-cta:active .cta-panel { background: var(--red-dark); }
+}
 
 /* ---------- Footer ---------- */
 
