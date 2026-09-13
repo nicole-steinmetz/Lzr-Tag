@@ -30,8 +30,12 @@
         var RED = [224, 8, 3];
         var line = headline.querySelector('.tagline-red');
         var dots = document.querySelector('[data-testid="hero-dots"]');
+        var heroEl = document.querySelector('[data-testid="hero-section"]');
         if (dots) {
             dots.style.opacity = '0';
+        }
+        if (heroEl) {
+            heroEl.style.backgroundColor = 'rgb(239,239,241)';
         }
         var words = [];
 
@@ -59,9 +63,15 @@
             ticking = false;
             var scrollable = Math.max(track.offsetHeight - window.innerHeight, 1);
             var p = Math.min(Math.max(window.scrollY / (scrollable * 0.5), 0), 1);
+            var dp = p * p * (3 - 2 * p);
             if (dots) {
-                var dp = p * p * (3 - 2 * p);
                 dots.style.opacity = dp;
+            }
+            if (heroEl) {
+                heroEl.style.backgroundColor =
+                    'rgb(' + lerp(239, 255, dp) + ',' +
+                    lerp(239, 255, dp) + ',' +
+                    lerp(241, 255, dp) + ')';
             }
             words.forEach(function (el, i) {
                 var t = Math.min(Math.max(p * words.length - i, 0), 1);

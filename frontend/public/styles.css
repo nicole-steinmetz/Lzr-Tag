@@ -186,7 +186,7 @@ img { display: block; max-width: 100%; }
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1.5px, transparent 1.6px);
+    background-image: radial-gradient(circle, rgba(206, 208, 214, 1) 1.5px, transparent 1.6px);
     background-size: 26px 26px;
 }
 
