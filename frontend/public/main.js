@@ -148,4 +148,27 @@
         window.addEventListener('load', paintIntro);
         paintIntro();
     }
+    var customCard = document.querySelector('[data-testid="product-custom"]');
+
+    if (customCard && !reducedMotion) {
+        var xTicking = false;
+        function paintCustom() {
+            xTicking = false;
+            var r = customCard.getBoundingClientRect();
+            var vh = window.innerHeight;
+            var p = Math.min(Math.max((vh * 0.9 - r.top) / (vh * 0.45), 0), 1);
+            var e = p * p * (3 - 2 * p);
+            customCard.style.transform = 'translateX(' + ((1 - e) * 35) + '%)';
+        }
+        function onCustomScroll() {
+            if (!xTicking) {
+                xTicking = true;
+                requestAnimationFrame(paintCustom);
+            }
+        }
+        window.addEventListener('scroll', onCustomScroll, { passive: true });
+        window.addEventListener('resize', paintCustom);
+        window.addEventListener('load', paintCustom);
+        paintCustom();
+    }
 })();
