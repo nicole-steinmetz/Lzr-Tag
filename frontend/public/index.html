@@ -419,16 +419,51 @@
 
     <footer class="site-footer" data-testid="site-footer">
         <div class="footer-inner">
-            <a href="#top" class="footer-brand" data-testid="footer-brand">
-                <img src="./assets/logo.webp" alt="LZR TAG logo" class="footer-logo" data-testid="footer-logo" />
-                <span class="footer-tagline">Stay Covered. Stay Visible.</span>
-            </a>
-            <nav class="footer-nav" aria-label="Footer">
-                <a href="#products" class="footer-link" data-testid="footer-link-products">Products</a>
-                <a href="#where-to-buy" class="footer-link" data-testid="footer-link-where-to-buy">Where to Buy</a>
-                <a href="#quote" class="footer-link" data-testid="footer-link-quote">Get a Quote</a>
-            </nav>
-            <p class="footer-copy" data-testid="footer-copy">&copy; <span id="footer-year">2026</span> LZR TAG. All rights reserved.</p>
+            <div class="footer-main">
+                <div class="footer-brand-col">
+                    <a href="#top" class="footer-brand" data-testid="footer-brand">
+                        <img src="./assets/logo.webp" alt="LZR TAG logo" class="footer-logo" data-testid="footer-logo" />
+                    </a>
+                    <p class="footer-tagline">Stay Covered.<br />Stay Visible.</p>
+                </div>
+                <nav class="footer-col" aria-label="Site">
+                    <h3 class="footer-heading">Site</h3>
+                    <a href="#top" class="footer-link" data-testid="footer-link-home">Home</a>
+                    <a href="#products" class="footer-link" data-testid="footer-link-products">Products</a>
+                    <a href="#where-to-buy" class="footer-link" data-testid="footer-link-where-to-buy">Where to Buy</a>
+                    <a href="#quote" class="footer-link" data-testid="footer-link-quote">Get a Quote</a>
+                    <div class="footer-contact">
+                        <h3 class="footer-heading">Contact</h3>
+                        <a href="mailto:consumables@egspatial.com" class="footer-link" data-testid="footer-link-email">consumables@egspatial.com</a>
+                    </div>
+                </nav>
+                <nav class="footer-col" aria-label="Products 1 to 6">
+                    <h3 class="footer-heading">Products</h3>
+                    <a href="#product-lzr-001" class="footer-link" data-testid="footer-link-lzr-001">LZR Tag</a>
+                    <a href="#product-lzr-002" class="footer-link" data-testid="footer-link-lzr-002">LZR Tag Mini</a>
+                    <a href="#product-ss-01" class="footer-link" data-testid="footer-link-ss-01">Stainless Steel Wall Station Sleeve</a>
+                    <a href="#product-ss-02" class="footer-link" data-testid="footer-link-ss-02">Stainless Steel Wall Station Spigot</a>
+                    <a href="#product-ss-03" class="footer-link" data-testid="footer-link-ss-03">Wall Station Survey Markers</a>
+                    <a href="#product-ss-04" class="footer-link" data-testid="footer-link-ss-04">Wall Station Sleeve Installer</a>
+                </nav>
+                <nav class="footer-col" aria-label="Products 7 to 12">
+                    <h3 class="footer-heading">More Products</h3>
+                    <a href="#product-ss-05" class="footer-link" data-testid="footer-link-ss-05">Custom Pelican Cases</a>
+                    <a href="#product-nu-02" class="footer-link" data-testid="footer-link-nu-02">Selleys' Knead It</a>
+                    <a href="#product-nu-01" class="footer-link" data-testid="footer-link-nu-01">Ramset Anchored Eye-bolt</a>
+                    <a href="#product-nu-03" class="footer-link" data-testid="footer-link-nu-03">SDS Drill Bits</a>
+                    <a href="#product-nu-04" class="footer-link" data-testid="footer-link-nu-04">Laser ID Cattle Tag</a>
+                    <a href="#product-custom" class="footer-link" data-testid="footer-link-custom">Custom Manufacturing</a>
+                </nav>
+            </div>
+            <div class="footer-divider" aria-hidden="true"></div>
+            <div class="footer-bottom">
+                <p class="footer-copy" data-testid="footer-copy">&copy; <span id="footer-year">2026</span> LZR TAG. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#" class="footer-legal-link" data-testid="footer-link-privacy">Privacy Policy</a>
+                    <a href="#" class="footer-legal-link" data-testid="footer-link-terms">Terms</a>
+                </div>
+            </div>
         </div>
     </footer>
 

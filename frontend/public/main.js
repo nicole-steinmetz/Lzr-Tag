@@ -16,6 +16,12 @@
         });
     }
 
+    document.querySelectorAll('.product-card').forEach(function (card) {
+        if (card.dataset.testid && !card.id) {
+            card.id = card.dataset.testid;
+        }
+    });
+
     var year = document.getElementById('footer-year');
     if (year) {
         year.textContent = new Date().getFullYear();
