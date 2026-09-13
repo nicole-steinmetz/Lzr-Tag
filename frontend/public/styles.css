@@ -284,20 +284,71 @@ img { display: block; max-width: 100%; }
     transform: translateY(-2px);
 }
 
-.section-badge {
-    flex: 0 0 auto;
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: var(--red);
-    color: #fff;
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-size: 20px;
+/* ---------- Where to Buy / Partners ---------- */
+
+.where-section {
+    text-align: center;
+    padding: 88px 24px;
+}
+
+.where-copy {
+    margin: 0 auto;
+    max-width: 60ch;
+}
+
+.partners {
+    max-width: 560px;
+    margin: 56px auto 0;
+    overflow: hidden;
+}
+
+.partners-track {
+    display: flex;
+    width: max-content;
+    animation: partnersScroll 26s linear infinite;
+}
+
+.partners:hover .partners-track { animation-play-state: paused; }
+
+.partner {
+    width: 200px;
+    margin-right: 32px;
+    background: #fff;
+    border: 1px solid var(--line);
+}
+
+.partner-logo {
+    height: 108px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(224, 10, 2, 0.35);
+    padding: 20px 24px;
+}
+
+.partner-logo img {
+    max-height: 68px;
+    max-width: 100%;
+    width: auto;
+}
+
+.partner-band {
+    background: #0B0B0D;
+    color: #fff;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px 8px;
+}
+
+@keyframes partnersScroll {
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .partners-track { animation: none; }
 }
 
 .section-title {
@@ -749,8 +800,6 @@ img { display: block; max-width: 100%; }
     .brand-logo { width: 104px; height: 104px; }
 
     .section-card { padding: 32px 24px; gap: 20px; }
-
-    .section-badge { width: 44px; height: 44px; font-size: 16px; }
 
     .section-title { font-size: 22px; }
 
