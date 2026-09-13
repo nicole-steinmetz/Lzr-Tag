@@ -148,6 +148,44 @@
         window.addEventListener('load', paintIntro);
         paintIntro();
     }
+    var fadeZone = document.querySelector('[data-testid="fade-zone"]');
+    var whereEl = document.querySelector('[data-testid="section-where-to-buy"]');
+    var quoteEl = document.querySelector('[data-testid="section-quote"]');
+
+    if (fadeZone && whereEl && quoteEl && !reducedMotion) {
+        var ZONE_GREY = [239, 239, 241];
+        function lerp3(a, b, t) {
+            return Math.round(a + (b - a) * t);
+        }
+        function smooth(x) {
+            return x * x * (3 - 2 * x);
+        }
+        var fTicking = false;
+        function paintZone() {
+            fTicking = false;
+            var vh = window.innerHeight;
+            var rw = whereEl.getBoundingClientRect();
+            var pIn = Math.min(Math.max((vh * 0.95 - rw.top) / (vh * 0.6), 0), 1);
+            var rq = quoteEl.getBoundingClientRect();
+            var pOut = Math.min(Math.max((vh - rq.top - rq.height * 0.5) / (rq.height * 0.45), 0), 1);
+            var w = smooth(pIn) * (1 - smooth(pOut));
+            fadeZone.style.backgroundColor =
+                'rgb(' + lerp3(ZONE_GREY[0], 255, w) + ',' +
+                lerp3(ZONE_GREY[1], 255, w) + ',' +
+                lerp3(ZONE_GREY[2], 255, w) + ')';
+        }
+        function onZoneScroll() {
+            if (!fTicking) {
+                fTicking = true;
+                requestAnimationFrame(paintZone);
+            }
+        }
+        window.addEventListener('scroll', onZoneScroll, { passive: true });
+        window.addEventListener('resize', paintZone);
+        window.addEventListener('load', paintZone);
+        paintZone();
+    }
+
     var customCard = document.querySelector('[data-testid="product-custom"]');
 
     if (customCard && !reducedMotion) {
