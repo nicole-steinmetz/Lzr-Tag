@@ -132,4 +132,38 @@
         window.addEventListener('load', paintIntro);
         paintIntro();
     }
+    var productCards = document.querySelectorAll('.product-card');
+
+    if (productCards.length && !reducedMotion) {
+        var overlays = [];
+        productCards.forEach(function (card, i) {
+            var ov = document.createElement('div');
+            ov.className = 'card-reveal';
+            ov.setAttribute('aria-hidden', 'true');
+            card.appendChild(ov);
+            overlays.push({ card: card, ov: ov, i: i });
+        });
+
+        var cTicking = false;
+        function paintCards() {
+            cTicking = false;
+            var vh = window.innerHeight;
+            overlays.forEach(function (o) {
+                var r = o.card.getBoundingClientRect();
+                var p = Math.min(Math.max((vh * 0.92 - r.top) / (vh * 0.45), 0), 1);
+                p = Math.min(Math.max(p * 1.5 - o.i * 0.04, 0), 1);
+                o.ov.style.transform = 'scaleY(' + (1 - p) + ')';
+            });
+        }
+        function onCardScroll() {
+            if (!cTicking) {
+                cTicking = true;
+                requestAnimationFrame(paintCards);
+            }
+        }
+        window.addEventListener('scroll', onCardScroll, { passive: true });
+        window.addEventListener('resize', paintCards);
+        window.addEventListener('load', paintCards);
+        paintCards();
+    }
 })();

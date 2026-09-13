@@ -350,7 +350,6 @@ img { display: block; max-width: 100%; }
     gap: 28px;
     margin-top: 40px;
     overflow-x: auto;
-    scroll-snap-type: x proximity;
     scrollbar-width: none;
     padding-bottom: 8px;
 }
@@ -359,7 +358,16 @@ img { display: block; max-width: 100%; }
 
 .product-grid .product-card {
     flex: 0 0 480px;
-    scroll-snap-align: start;
+}
+
+.card-reveal {
+    position: absolute;
+    inset: -1px;
+    z-index: 3;
+    background: var(--bg);
+    transform-origin: top center;
+    transform: scaleY(1);
+    pointer-events: none;
 }
 
 .product-card {
