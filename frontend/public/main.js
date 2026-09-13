@@ -132,43 +132,4 @@
         window.addEventListener('load', paintIntro);
         paintIntro();
     }
-    var productCards = document.querySelectorAll('.product-card');
-    var productGrid = document.querySelector('.product-grid');
-
-    if (productCards.length && productGrid && !reducedMotion) {
-        var overlays = [];
-        productCards.forEach(function (card) {
-            var ov = document.createElement('div');
-            ov.className = 'card-reveal';
-            ov.setAttribute('aria-hidden', 'true');
-            card.appendChild(ov);
-            overlays.push({ card: card, ov: ov });
-        });
-
-        var cTicking = false;
-        function paintCards() {
-            cTicking = false;
-            var vh = window.innerHeight;
-            var gridRight = productGrid.getBoundingClientRect().right;
-            overlays.forEach(function (o) {
-                var r = o.card.getBoundingClientRect();
-                var w = Math.max(r.width, 1);
-                var pv = Math.min(Math.max((vh * 0.92 - r.top) / (vh * 0.45), 0), 1);
-                var ph = Math.min(Math.max((gridRight - r.left) / w, 0), 1);
-                var p = Math.min(pv, ph);
-                o.ov.style.transform = 'scaleY(' + (1 - p) + ')';
-            });
-        }
-        function onCardScroll() {
-            if (!cTicking) {
-                cTicking = true;
-                requestAnimationFrame(paintCards);
-            }
-        }
-        window.addEventListener('scroll', onCardScroll, { passive: true });
-        productGrid.addEventListener('scroll', onCardScroll, { passive: true });
-        window.addEventListener('resize', paintCards);
-        window.addEventListener('load', paintCards);
-        paintCards();
-    }
 })();
