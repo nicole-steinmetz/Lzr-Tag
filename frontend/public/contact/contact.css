@@ -1,0 +1,27 @@
+/* Contact page — extends the main stylesheet */
+
+.contact-hero {
+    text-align: center;
+    padding: calc(var(--header-h) + var(--strip-h) + 72px) 24px 80px;
+    background: var(--bg);
+}
+
+.contact-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    margin-bottom: 36px;
+}
+
+.contact-form-section {
+    background: #fff;
+    padding: 72px 24px 96px;
+}
+
+@media (max-width: 860px) {
+    .contact-hero { padding: calc(var(--header-h) + var(--strip-h) + 48px) 24px 56px; }
+}
