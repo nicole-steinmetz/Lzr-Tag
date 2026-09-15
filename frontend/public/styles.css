@@ -68,7 +68,7 @@ img { display: block; max-width: 100%; }
 
 .brand-logo {
     width: 148px;
-    height: 148px;
+    height: auto;
     margin-top: calc(-1 * var(--strip-h));
     filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.3));
 }
@@ -166,7 +166,7 @@ img { display: block; max-width: 100%; }
 
 .hero-track {
     position: relative;
-    height: 220vh;
+    height: 160vh;
 }
 
 .hero {
@@ -194,7 +194,7 @@ img { display: block; max-width: 100%; }
     position: relative;
     z-index: 1;
     max-width: 780px;
-    margin: 0 auto;
+    margin: -6vh auto 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -222,15 +222,13 @@ img { display: block; max-width: 100%; }
 .hero-tagline {
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: clamp(3.25rem, 6.75vw, 5.25rem);
+    font-size: clamp(2.5rem, 7vw, 6rem);
     line-height: 1.05;
     text-transform: uppercase;
     letter-spacing: 0.01em;
-    color: var(--ink);
+    color: #E00803;
     margin-bottom: 28px;
 }
-
-.tagline-red { color: #E00803; }
 
 .hero-copy {
     max-width: 58ch;
@@ -260,7 +258,7 @@ img { display: block; max-width: 100%; }
 .sections {
     max-width: 1160px;
     margin: 0 auto;
-    padding: 72px 24px 96px;
+    padding: 32px 24px 96px;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -803,7 +801,7 @@ img { display: block; max-width: 100%; }
 
     .hero { padding-bottom: 56px; }
 
-    .brand-logo { width: 104px; height: 104px; }
+    .brand-logo { width: 104px; height: auto; }
 
     .section-title { font-size: 22px; }
 

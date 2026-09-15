@@ -34,7 +34,6 @@
     if (headline && track && !reducedMotion) {
         var GREY = [217, 217, 217];
         var RED = [224, 8, 3];
-        var line = headline.querySelector('.tagline-red');
         var dots = document.querySelector('[data-testid="hero-dots"]');
         var heroEl = document.querySelector('[data-testid="hero-section"]');
         if (dots) {
@@ -45,20 +44,18 @@
         }
         var words = [];
 
-        if (line) {
-            var text = line.textContent.trim();
-            line.textContent = '';
-            text.split(/\s+/).forEach(function (w, i, arr) {
-                var span = document.createElement('span');
-                span.className = 'word';
-                span.textContent = w;
-                words.push(span);
-                line.appendChild(span);
-                if (i < arr.length - 1) {
-                    line.appendChild(document.createTextNode(' '));
-                }
-            });
-        }
+        var htext = headline.textContent.trim();
+        headline.textContent = '';
+        htext.split(/\s+/).forEach(function (w, i, arr) {
+            var span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = w;
+            words.push(span);
+            headline.appendChild(span);
+            if (i < arr.length - 1) {
+                headline.appendChild(document.createTextNode(' '));
+            }
+        });
 
         function lerp(a, b, t) {
             return Math.round(a + (b - a) * t);
@@ -68,7 +65,7 @@
         function paint() {
             ticking = false;
             var scrollable = Math.max(track.offsetHeight - window.innerHeight, 1);
-            var p = Math.min(Math.max(window.scrollY / (scrollable * 0.5), 0), 1);
+            var p = Math.min(Math.max(window.scrollY / (scrollable * 0.85), 0), 1);
             var dp = p * p * (3 - 2 * p);
             if (dots) {
                 dots.style.opacity = dp;
