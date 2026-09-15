@@ -43,19 +43,22 @@
             heroEl.style.backgroundColor = 'rgb(239,239,241)';
         }
         var words = [];
+        var line = headline.querySelector('.h1-anim');
 
-        var htext = headline.textContent.trim();
-        headline.textContent = '';
-        htext.split(/\s+/).forEach(function (w, i, arr) {
-            var span = document.createElement('span');
-            span.className = 'word';
-            span.textContent = w;
-            words.push(span);
-            headline.appendChild(span);
-            if (i < arr.length - 1) {
-                headline.appendChild(document.createTextNode(' '));
-            }
-        });
+        if (line) {
+            var htext = line.textContent.trim();
+            line.textContent = '';
+            htext.split(/\s+/).forEach(function (w, i, arr) {
+                var span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = w;
+                words.push(span);
+                line.appendChild(span);
+                if (i < arr.length - 1) {
+                    line.appendChild(document.createTextNode(' '));
+                }
+            });
+        }
 
         function lerp(a, b, t) {
             return Math.round(a + (b - a) * t);
@@ -64,7 +67,7 @@
         var ticking = false;
         function paint() {
             ticking = false;
-            var scrollable = Math.max(track.offsetHeight - window.innerHeight, 1);
+            var scrollable = Math.max(heroEl.offsetHeight * 0.55, 1);
             var p = Math.min(Math.max(window.scrollY / (scrollable * 0.85), 0), 1);
             var dp = p * p * (3 - 2 * p);
             if (dots) {
@@ -184,17 +187,33 @@
     }
 
     var customCard = document.querySelector('[data-testid="product-custom"]');
+    var customZone = document.querySelector('[data-testid="custom-card-wrap"]');
 
-    if (customCard && !reducedMotion) {
-        var xTicking = false;
+    if (customCard && customZone && !reducedMotion) {
+        var plusMarks = customCard.querySelectorAll('.plus');
         function paintCustom() {
             xTicking = false;
-            var r = customCard.getBoundingClientRect();
+            if (window.innerWidth <= 860) {
+                customCard.style.width = '';
+                customCard.style.marginLeft = '';
+                customCard.style.borderColor = '';
+                customCard.style.boxShadow = '';
+                plusMarks.forEach(function (m) { m.style.opacity = ''; });
+                return;
+            }
             var vh = window.innerHeight;
-            var p = Math.min(Math.max((vh * 0.9 - r.top) / (vh * 0.45), 0), 1);
+            var r = customZone.getBoundingClientRect();
+            var p = Math.min(Math.max((170 - r.top) / (vh * 0.6), 0), 1);
             var e = p * p * (3 - 2 * p);
-            customCard.style.transform = 'translateX(' + ((1 - e) * 35) + '%)';
+            var contW = customZone.clientWidth;
+            var vw = window.innerWidth;
+            customCard.style.width = Math.round(contW + (vw - contW) * e) + 'px';
+            customCard.style.marginLeft = Math.round(-(vw - contW) / 2 * e) + 'px';
+            customCard.style.borderColor = 'rgba(226,227,232,' + (1 - e) + ')';
+            customCard.style.boxShadow = '0 -18px 40px rgba(0,0,0,' + (0.12 * (1 - e)) + ')';
+            plusMarks.forEach(function (m) { m.style.opacity = 1 - e; });
         }
+        var xTicking = false;
         function onCustomScroll() {
             if (!xTicking) {
                 xTicking = true;
@@ -202,7 +221,7 @@
             }
         }
         window.addEventListener('scroll', onCustomScroll, { passive: true });
-        window.addEventListener('resize', paintCustom);
+        window.addEventListener('resize', onCustomScroll);
         window.addEventListener('load', paintCustom);
         paintCustom();
     }
