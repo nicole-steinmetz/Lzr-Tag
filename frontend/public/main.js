@@ -60,7 +60,7 @@
 
         // Pin the hero for 30vh of scroll while the wipe completes, then release.
         function pinDistance() {
-            return Math.round(window.innerHeight * 0.3);
+            return Math.round(window.innerHeight * 0.5);
         }
         var lastTrackH = null;
         function sizeTrack() {
@@ -232,7 +232,7 @@
             }
             var vh = window.innerHeight;
             var r = customZone.getBoundingClientRect();
-            var p = Math.min(Math.max((170 - r.top) / (vh * 0.6), 0), 1);
+            var p = Math.min(Math.max((137 - r.top) / (vh * 0.6), 0), 1);
             var e = p * p * (3 - 2 * p);
             var contW = customZone.clientWidth;
             var vw = window.innerWidth;
