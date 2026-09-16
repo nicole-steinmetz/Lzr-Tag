@@ -1,0 +1,37 @@
+{
+  "summary": "Frontend-only verification of LZR TAG static site scroll/hero/interstitial/logo changes. All 10 acceptance checks pass at 1440x800, 1280x720, mobile 390x844, and prefers-reduced-motion.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "acceptance_results": {
+    "pin_completes_1440x800": "PASS - heroTop=0 for scrollY 0..240; at scrollY=240 both words = rgb(224,8,3); hero opaque throughout (bg lerps EFEFF1 -> white, no ghosting).",
+    "card1_visible_at_unpin_1440x800": "PASS - at scrollY=240 card1.top=330 > 0.",
+    "card1_visible_at_unpin_1280x720": "PASS - at scrollY=216 (30vh) heroTop=0, card1.top=346 > 0, both words red.",
+    "no_double_sticky": "PASS - scanned scrollY 200..500 step 20: no y where hero (top=0) and card1 (top~104) both pinned. Hero starts releasing at scrollY>240.",
+    "gap_1440x800": "PASS - CTA bottom to card1 top gap = 96.3px (<=100).",
+    "blend": "PASS - hero .hero::after gradient uses solid hero-bg -> --bg (never translucent); dot mask fades over last 180px; hero bg color transitions smoothly with wipe progress.",
+    "logo": "PASS - brand-logo width=180px; crack at y=50 exactly matches nav-link vertical center y=50; logoBottom=113 < heroH1Top=136 at 1440x800 (no overlap). Same clearance at 1280x720.",
+    "mobile": "PASS - at 390x844 hero position=static (no pin), track has no forced height override, both 'Surveying Consumables' words render red on load and stay red after scroll.",
+    "reduced_motion": "PASS - with prefers-reduced-motion: reduce at 1440x800, hero position=static, line 2 renders red (CSS default #E00803), page scrolls normally (heroTop=-300 at scrollY=300).",
+    "interstitial": "PASS - DOM order: nu-04 -> products-interstitial -> custom-card-wrap. Rendered center-aligned, 16px, text-transform:none, border:0. Present as expected.",
+    "regression": "PASS - partners carousel visible, quote iframe src=https://giyjwyy9mj.zite.so/ loaded, footer visible, body/html overflow=visible (no scroll-lock). 12-card sticky stack and CUSTOM full-bleed logic untouched."
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "main.js hero bg lerp goes from rgb(239,239,241) to rgb(255,255,255) - visually acceptable because .sections has no background so body #EFEFF1 shows through, giving hero-white against page-grey. Not a bug but confirm designer intent: request said 'hero bg colour -> Products grey', current code moves hero bg TOWARD white as wipe progresses (the ::after gradient still ends at --bg so bottom edge blends cleanly to products).",
+    "styles.css .h1-line has white-space:nowrap - safe at 1280+ but may cause overflow on ~700-900px viewports if pin ever activates there (currently pin only >=768). Consider explicit min-width guard.",
+    "Minor: main.js reduces to no-op fallback under reduced-motion; the h1-anim line text remains a single node (no per-word spans). This is by design (CSS colours the whole line red) - all good."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "test_credentials": "none required",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Static site under /app/frontend/public. Use REACT_APP_BACKEND_URL for public URL. Disable smooth scroll via document.documentElement.style.scrollBehavior='auto' before window.scrollTo, wait ~300-400ms before measuring. Pin distance = 30vh (216px @720, 240px @800). Hero sticky release verified at both 1280x720 and 1440x800. No known regressions.",
+  "rca of the issue": "N/A - no defects found."
+}
