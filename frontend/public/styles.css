@@ -505,7 +505,6 @@ img { display: block; max-width: 100%; }
 .product-grid .product-card:nth-child(9) { top: calc(var(--header-h) + var(--strip-h) + 128px); }
 .product-grid .product-card:nth-child(10) { top: calc(var(--header-h) + var(--strip-h) + 142px); }
 .product-grid .product-card:nth-child(11) { top: calc(var(--header-h) + var(--strip-h) + 156px); }
-.product-grid .product-card:nth-child(12) { top: calc(var(--header-h) + var(--strip-h) + 170px); }
 
 .product-card {
     position: relative;

@@ -1,0 +1,47 @@
+{
+  "summary": "Frontend-only verification of two scroll changes on LZR TAG static site: (1) 50vh hero pin with grey->red word wipe on headline line 2 and (2) sentence + CUSTOM (card 12) sticky-pinned group inside .custom-zone. All acceptance targets pass independently at 1440x800, 1280x720, and 390x844 (mobile). Reduced-motion behavior verified via CSS media-query rules only (Playwright emulate_media API not available in this runner).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "hero_pin_1440x800": {
+      "scroll0": {"heroTop": 0, "w0": "rgb(217,217,217)", "w1": "rgb(217,217,217)", "card1Top": 570, "pass": true},
+      "scroll200": {"heroTop": 0, "w0": "rgb(224,8,3)", "w1": "rgb(217,217,217)", "pass": true},
+      "scroll400_release": {"heroTop": 0, "w0": "rgb(224,8,3)", "w1": "rgb(224,8,3)", "pass": true},
+      "scroll450_released": {"heroTop": -49.69, "pass": true}
+    },
+    "hero_pin_1280x720": {
+      "scroll360_release": {"heroTop": 0, "w0": "rgb(224,8,3)", "w1": "rgb(224,8,3)", "pass": true},
+      "scroll400_released": {"heroTop": -39.66, "pass": true}
+    },
+    "custom_pin_1440x800": {
+      "gap_logo_to_sentence": 23.78,
+      "gap_sentence_to_card": 32,
+      "gap_card_to_viewport_bottom": 24,
+      "sentence_top": 137,
+      "card_cta_bottom": 751,
+      "tolerance_pass": true
+    },
+    "custom_pin_persistence": {"sentTop_after_+500": 137, "pass": true},
+    "custom_full_bleed": {"expanded_left": 0, "expanded_width": 1440, "reverse_width": 1112, "pass": true},
+    "mobile_390x844": {"heroPosition": "static", "wordColors_red": true, "customPin_static": true, "sent_to_card_gap": 32, "pass": true},
+    "reduced_motion": {"verified_by": "CSS media query inspection (styles.css lines 206, 487)", "hero_static_rule_present": true, "custom_pin_static_rule_present": true, "custom_zone_height_auto_rule_present": true}
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "styles.css line 508 (.product-grid .product-card:nth-child(12) top: 170px) is unused since card 12 was moved out of .product-grid into .custom-zone/.custom-pin; safe to remove for clarity.",
+    "main.js line 61 comment still says '30vh' but pinDistance is now 0.5*vh (50vh). Update stale comment.",
+    "main.js productsIntro block (lines 131-179) still bound to '[data-testid=products-intro]' selector, but no such element exists in the HTML anymore (products-interstitial is now the id). Dead code — safe to remove."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (static site)", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All numeric targets from the request pass at 1440x800, 1280x720 and 390x844. Custom-zone abs top on desktop is ~7788px. To measure pin state precisely: set document.documentElement.style.scrollBehavior='auto' before window.scrollTo and wait 300-400ms. Full-bleed trigger begins as soon as .custom-zone top passes 137 (rate = 1/(0.6*vh)); scrolling +500 past the pin point already fully expands the card to viewport width.",
+  "rca of the issue": "N/A — no bugs found. All UAT targets pass within tolerance (±4px on gaps, exact on colors at boundary scrolls)."
+}
