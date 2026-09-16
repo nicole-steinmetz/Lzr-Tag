@@ -36,12 +36,6 @@
         var RED = [224, 8, 3];
         var dots = document.querySelector('[data-testid="hero-dots"]');
         var heroEl = document.querySelector('[data-testid="hero-section"]');
-        if (dots) {
-            dots.style.opacity = '0';
-        }
-        if (heroEl) {
-            heroEl.style.backgroundColor = 'rgb(239,239,241)';
-        }
         var words = [];
         var line = headline.querySelector('.h1-anim');
 
@@ -64,20 +58,55 @@
             return Math.round(a + (b - a) * t);
         }
 
+        // Pin the hero for 30vh of scroll while the wipe completes, then release.
+        function pinDistance() {
+            return Math.round(window.innerHeight * 0.3);
+        }
+        var lastTrackH = null;
+        function sizeTrack() {
+            if (!heroEl) {
+                return;
+            }
+            var h = window.innerWidth < 768 ? null : heroEl.offsetHeight + pinDistance();
+            if (h === lastTrackH) {
+                return;
+            }
+            lastTrackH = h;
+            if (h === null) {
+                track.style.height = '';
+                track.style.marginBottom = '';
+            } else {
+                track.style.height = h + 'px';
+                track.style.marginBottom = (-pinDistance()) + 'px';
+            }
+        }
+
         var ticking = false;
         function paint() {
             ticking = false;
-            var scrollable = Math.max(heroEl.offsetHeight * 0.55, 1);
-            var p = Math.min(Math.max(window.scrollY / (scrollable * 0.85), 0), 1);
+            sizeTrack();
+            if (window.innerWidth < 768) {
+                if (dots) {
+                    dots.style.opacity = '';
+                }
+                if (heroEl) {
+                    heroEl.style.backgroundColor = '';
+                    heroEl.style.removeProperty('--hero-blend-top');
+                }
+                words.forEach(function (el) { el.style.color = ''; });
+                return;
+            }
+            var p = Math.min(Math.max(window.scrollY / Math.max(pinDistance(), 1), 0), 1);
             var dp = p * p * (3 - 2 * p);
             if (dots) {
                 dots.style.opacity = dp;
             }
             if (heroEl) {
-                heroEl.style.backgroundColor =
-                    'rgb(' + lerp(239, 255, dp) + ',' +
+                var bg = 'rgb(' + lerp(239, 255, dp) + ',' +
                     lerp(239, 255, dp) + ',' +
                     lerp(241, 255, dp) + ')';
+                heroEl.style.backgroundColor = bg;
+                heroEl.style.setProperty('--hero-blend-top', bg);
             }
             words.forEach(function (el, i) {
                 var t = Math.min(Math.max(p * words.length - i, 0), 1);
