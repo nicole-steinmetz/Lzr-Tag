@@ -164,14 +164,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Hero ---------- */
 
-.hero-track {
-    position: relative;
-    z-index: 5;
-}
-
 .hero {
-    position: sticky;
-    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -202,9 +195,19 @@ img { display: block; max-width: 100%; }
     mask-image: linear-gradient(to bottom, #000 calc(100% - 180px), transparent 100%);
 }
 
-/* Pin disabled below 768px and for reduced motion: static hero, final colours */
+/* Whole-page pin: all content below the fixed header sticks as one unit
+   for 50vh of scroll (track height set in JS), then releases */
+.pin-track {
+    position: relative;
+}
+
+.page-pin {
+    position: sticky;
+    top: 0;
+}
+
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
-    .hero { position: static; }
+    .page-pin { position: static; }
 }
 
 .hero-inner {

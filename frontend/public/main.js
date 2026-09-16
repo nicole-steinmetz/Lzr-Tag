@@ -28,14 +28,15 @@
     }
 
     var headline = document.querySelector('[data-testid="hero-tagline"]');
-    var track = document.querySelector('[data-testid="hero-track"]');
+    var pagePin = document.querySelector('[data-testid="page-pin"]');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (headline && track && !reducedMotion) {
+    if (headline && pagePin && !reducedMotion) {
         var GREY = [217, 217, 217];
         var RED = [224, 8, 3];
         var dots = document.querySelector('[data-testid="hero-dots"]');
         var heroEl = document.querySelector('[data-testid="hero-section"]');
+        var track = pagePin.parentElement;
         var words = [];
         var line = headline.querySelector('.h1-anim');
 
@@ -58,45 +59,7 @@
             return Math.round(a + (b - a) * t);
         }
 
-        // Pin the hero for 50vh of scroll while the wipe completes, then release.
-        function pinDistance() {
-            return Math.round(window.innerHeight * 0.5);
-        }
-        var lastTrackH = null;
-        function sizeTrack() {
-            if (!heroEl) {
-                return;
-            }
-            var h = window.innerWidth < 768 ? null : heroEl.offsetHeight + pinDistance();
-            if (h === lastTrackH) {
-                return;
-            }
-            lastTrackH = h;
-            if (h === null) {
-                track.style.height = '';
-                track.style.marginBottom = '';
-            } else {
-                track.style.height = h + 'px';
-                track.style.marginBottom = (-pinDistance()) + 'px';
-            }
-        }
-
-        var ticking = false;
-        function paint() {
-            ticking = false;
-            sizeTrack();
-            if (window.innerWidth < 768) {
-                if (dots) {
-                    dots.style.opacity = '';
-                }
-                if (heroEl) {
-                    heroEl.style.backgroundColor = '';
-                    heroEl.style.removeProperty('--hero-blend-top');
-                }
-                words.forEach(function (el) { el.style.color = ''; });
-                return;
-            }
-            var p = Math.min(Math.max(window.scrollY / Math.max(pinDistance(), 1), 0), 1);
+        function paintWipe(p) {
             var dp = p * p * (3 - 2 * p);
             if (dots) {
                 dots.style.opacity = dp;
@@ -116,6 +79,39 @@
                     lerp(GREY[1], RED[1], e) + ',' +
                     lerp(GREY[2], RED[2], e) + ')';
             });
+        }
+
+        // Pin the entire page content (hero + products together) as one unit
+        // for 50vh of scroll while the wipe completes, then release.
+        function pinDistance() {
+            return Math.round(window.innerHeight * 0.5);
+        }
+        var lastTrackH = null;
+        function sizeTrack() {
+            var h = window.innerWidth < 768 ? null : pagePin.offsetHeight + pinDistance();
+            if (h === lastTrackH) {
+                return;
+            }
+            lastTrackH = h;
+            track.style.height = h === null ? '' : h + 'px';
+        }
+
+        var ticking = false;
+        function paint() {
+            ticking = false;
+            sizeTrack();
+            if (window.innerWidth < 768) {
+                words.forEach(function (el) { el.style.color = ''; });
+                if (dots) {
+                    dots.style.opacity = '';
+                }
+                if (heroEl) {
+                    heroEl.style.backgroundColor = '';
+                    heroEl.style.removeProperty('--hero-blend-top');
+                }
+                return;
+            }
+            paintWipe(Math.min(Math.max(window.scrollY / Math.max(pinDistance(), 1), 0), 1));
         }
         function onScroll() {
             if (!ticking) {
