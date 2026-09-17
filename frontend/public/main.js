@@ -59,28 +59,6 @@
             return Math.round(a + (b - a) * t);
         }
 
-        function paintWipe(p) {
-            var dp = p * p * (3 - 2 * p);
-            if (dots) {
-                dots.style.opacity = dp;
-            }
-            if (heroEl) {
-                var bg = 'rgb(' + lerp(239, 255, dp) + ',' +
-                    lerp(239, 255, dp) + ',' +
-                    lerp(241, 255, dp) + ')';
-                heroEl.style.backgroundColor = bg;
-                heroEl.style.setProperty('--hero-blend-top', bg);
-            }
-            words.forEach(function (el, i) {
-                var t = Math.min(Math.max(p * words.length - i, 0), 1);
-                var e = t * t * (3 - 2 * t);
-                el.style.color =
-                    'rgb(' + lerp(GREY[0], RED[0], e) + ',' +
-                    lerp(GREY[1], RED[1], e) + ',' +
-                    lerp(GREY[2], RED[2], e) + ')';
-            });
-        }
-
         // Pin the entire page content (hero + products together) as one unit
         // for 50vh of scroll while the wipe completes, then release.
         function pinDistance() {
@@ -101,6 +79,7 @@
             ticking = false;
             sizeTrack();
             if (window.innerWidth < 768) {
+                document.body.style.backgroundColor = '';
                 words.forEach(function (el) { el.style.color = ''; });
                 if (dots) {
                     dots.style.opacity = '';
@@ -108,10 +87,41 @@
                 if (heroEl) {
                     heroEl.style.backgroundColor = '';
                     heroEl.style.removeProperty('--hero-blend-top');
+                    heroEl.style.removeProperty('--page-bg');
                 }
                 return;
             }
-            paintWipe(Math.min(Math.max(window.scrollY / Math.max(pinDistance(), 1), 0), 1));
+            var pin = Math.max(pinDistance(), 1);
+            var p = Math.min(Math.max(window.scrollY / pin, 0), 1);
+            var back = Math.min(Math.max((window.scrollY - pin) / Math.max(window.innerHeight * 0.6, 1), 0), 1);
+            var dp = p * p * (3 - 2 * p);
+            var db = back * back * (3 - 2 * back);
+            // Hero turns white during the pin and stays white.
+            var bg = 'rgb(' + lerp(239, 255, dp) + ',' +
+                lerp(239, 255, dp) + ',' +
+                lerp(241, 255, dp) + ')';
+            // Page background follows the hero to white, then fades back to
+            // products grey over the 60vh after the pin releases.
+            var pageBg = 'rgb(' + lerp(lerp(239, 255, dp), 239, db) + ',' +
+                lerp(lerp(239, 255, dp), 239, db) + ',' +
+                lerp(lerp(241, 255, dp), 241, db) + ')';
+            document.body.style.backgroundColor = pageBg;
+            if (dots) {
+                dots.style.opacity = dp * (1 - db);
+            }
+            if (heroEl) {
+                heroEl.style.backgroundColor = bg;
+                heroEl.style.setProperty('--hero-blend-top', bg);
+                heroEl.style.setProperty('--page-bg', pageBg);
+            }
+            words.forEach(function (el, i) {
+                var t = Math.min(Math.max(p * words.length - i, 0), 1);
+                var e = t * t * (3 - 2 * t);
+                el.style.color =
+                    'rgb(' + lerp(GREY[0], RED[0], e) + ',' +
+                    lerp(GREY[1], RED[1], e) + ',' +
+                    lerp(GREY[2], RED[2], e) + ')';
+            });
         }
         function onScroll() {
             if (!ticking) {
